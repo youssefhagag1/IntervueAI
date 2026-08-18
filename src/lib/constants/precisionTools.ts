@@ -6,7 +6,7 @@ import {
   Languages,
 } from "lucide-react";
 
-const precisionTools: IPrecisionTools = [
+const precisionTools: IPrecisionTools[] = [
   {
     icon: MessagesSquare,
     title: "AI-Powered Interviews",

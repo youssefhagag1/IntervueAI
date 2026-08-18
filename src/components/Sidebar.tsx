@@ -24,7 +24,7 @@ const actualBar = (path: string) => (
             className={`flex items-center gap-3 p-4 ${path === link.href ? "bg-primary-container text-primary border-s-3 border-primary" : "hover:bg-gray-100"} `}
             key={link.label}
           >
-            <Icon size={20} />
+            {Icon && <Icon size={20} />}
             <span className="capitalize">{link.label}</span>
           </Link>
         );
@@ -51,7 +51,7 @@ const MobileSidebar = (path: string) => (
             className={`flex items-center gap-3 p-4 ${path === link.href ? "bg-primary-container text-primary border-s-3 border-primary" : "hover:bg-gray-100"} `}
             key={link.label}
           >
-            <Icon size={20} />
+            {Icon && <Icon size={20} />}
           </Link>
         );
       })}
