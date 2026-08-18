@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  clerkUserId String   @unique
+  firstName   String
+  lastName    String
+  email       String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  interviews Interview[]
+}
+
+model Interview {
+  id                String    @id @default(cuid())
+  userId            String
+  type              String
+  role              String
+  company           String?
+  difficulty        String
+  questionCount     Int
+  experienceContext String?   @db.Text
+  status            String
+  startedAt         DateTime?
+  completedAt       DateTime?
+  createdAt         DateTime  @default(now())
+
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questions       Question[]
+  interviewResult InterviewResult?
+
+  @@index([userId])
+}
+
+model Question {
+  id          String    @id @default(cuid())
+  interviewId String
+  content     String    @db.Text
+  order       Int
+  askedAt     DateTime?
+
+  interview Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  answer    Answer?
+
+  @@unique([interviewId, order])
+  @@index([interviewId])
+}
+
+model Answer {
+  id         String    @id @default(cuid())
+  questionId String    @unique
+  transcript String    @db.Text
+  duration   Int?
+  answeredAt DateTime?
+
+  question Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  feedback Feedback?
+
+  @@index([questionId])
+}
+
+model Feedback {
+  id                String @id @default(cuid())
+  answerId          String @unique
+  score             Float
+  technicalAccuracy Float
+  communication     Float
+  relevance         Float
+  strengths         String @db.Text
+  weaknesses        String @db.Text
+  suggestion        String @db.Text
+
+  answer Answer @relation(fields: [answerId], references: [id], onDelete: Cascade)
+}
+
+model InterviewResult {
+  id                  String @id @default(cuid())
+  interviewId         String @unique
+  overallScore        Float
+  technicalScore      Float
+  communicationScore  Float
+  problemSolvingScore Float
+  strengths           String @db.Text
+  weaknesses          String @db.Text
+  recommendation      String @db.Text
+
+  interview Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+}
