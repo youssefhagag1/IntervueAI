@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { Webhook } from "svix";
 
 import prisma from "@/lib/prisma";
+import clerkWebhook from "@/types/clerkWebhook";
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
@@ -35,17 +36,7 @@ export async function POST(req: Request) {
       "svix-id": svix_id,
       "svix-timestamp": svix_timestamp,
       "svix-signature": svix_signature,
-    }) as {
-      type: string;
-      data: {
-        id: string;
-        first_name: string | null;
-        last_name: string | null;
-        email_addresses: {
-          email_address: string;
-        }[];
-      };
-    };
+    }) as clerkWebhook[];
   } catch {
     return new Response("Invalid signature", {
       status: 400,

@@ -48,7 +48,7 @@ async function Dashboard() {
     hour < 12 ? "Good Morning" : hour < 18 ? "Good Afternoon" : "Good Evening";
 
   return (
-    <div className="md:px-4 flex flex-col gap-4">
+    <div className="p-4 flex flex-col gap-4">
       <div>
         <Title className="text-start mb-2 md:text-4xl text-lg">
           {date}, {user?.firstName}!
@@ -62,7 +62,7 @@ async function Dashboard() {
           <div className="bg-white rounded-sm shadow-sm p-5 space-y-8">
             <div className="space-y-2">
               <SubTitle className="text-start text-2xl text-bold">
-                Start a New <br /> Interview
+                 New <br /> Interview
               </SubTitle>
               <Text className="text-gray-500">
                 Practice algorithmic challenges or system design with our AI
